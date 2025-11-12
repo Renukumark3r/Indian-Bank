@@ -1,5 +1,6 @@
 package Modules;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
@@ -14,16 +15,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import genericLibraries.UtilityMethod;
+
 public class BranchCreation {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, IOException {
 
 		ChromeOptions op=new ChromeOptions();
 		op.setAcceptInsecureCerts(true);
 		ChromeDriver d=new ChromeDriver(op);
 		d.get("https://192.9.200.27:2322/IB_12_4/login.htm");
-		d.findElement(By.xpath("//input[@id='userid']")).sendKeys("NCS10");
-		d.findElement(By.xpath("//input[@type='password']")).sendKeys("1234");
+		d.findElement(By.xpath("//input[@id='userid']")).sendKeys(UtilityMethod.getproperty("UN"));
+		d.findElement(By.xpath("//input[@type='password']")).sendKeys(UtilityMethod.getproperty("PWD"));
 		d.findElement(By.xpath("//button[@type='button']")).click();
 
 		Thread.sleep(3000);
