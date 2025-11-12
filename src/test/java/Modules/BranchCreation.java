@@ -25,8 +25,6 @@ public class BranchCreation {
 		d.findElement(By.xpath("//input[@id='userid']")).sendKeys("NCS10");
 		d.findElement(By.xpath("//input[@type='password']")).sendKeys("1234");
 		d.findElement(By.xpath("//button[@type='button']")).click();
-		//Alert alert = d.switchTo().alert();
-		//alert.accept();
 
 		Thread.sleep(3000);
 		d.findElement(By.xpath("//img[@title='Master']")).click();
