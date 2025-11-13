@@ -8,6 +8,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -25,10 +26,18 @@ public class BranchCreation {
 		op.setAcceptInsecureCerts(true);
 		ChromeDriver d=new ChromeDriver(op);
 		d.get("https://192.9.200.27:2322/IB_12_4/login.htm");
+		d.manage().window().maximize();
 		d.findElement(By.xpath("//input[@id='userid']")).sendKeys(UtilityMethod.getproperty("UN"));
 		d.findElement(By.xpath("//input[@type='password']")).sendKeys(UtilityMethod.getproperty("PWD"));
 		d.findElement(By.xpath("//button[@type='button']")).click();
+		Thread.sleep(3000);
+		try {
+			Alert al= d.switchTo().alert();
+		     al.accept();
+             System.out.println("Alert found: " + al.getText());
 
+		} catch(NoAlertPresentException e) {
+		System.out.println("No alert appeared.");}
 		Thread.sleep(3000);
 		d.findElement(By.xpath("//img[@title='Master']")).click();
 		Thread.sleep(3000);
@@ -46,12 +55,7 @@ public class BranchCreation {
 		js.executeScript("window.scrollBy(0,500)");
 		d.findElement(By.xpath("//input[@id='bsrcode']")).sendKeys(UtilityMethod.getproperty("BSR"));
 		d.findElement(By.xpath("//input[@id='opendate']")).click();
-		/*
-		 * WebDriverWait wait = new WebDriverWait(d, Duration.ofSeconds(10));
-		 * wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(
-		 * "ui-datepicker-calendar")));
-		 */
-
+		
 		// Select Year
 		Thread.sleep(3000);
 		Select year = new Select(d.findElement(By.xpath("//select[@title='Change the year']")));
@@ -76,6 +80,7 @@ public class BranchCreation {
 		RBIAtype.selectByVisibleText(UtilityMethod.getproperty("RBIATYPE"));
 		d.findElement(By.xpath("//input[@id='city']")).sendKeys(UtilityMethod.getproperty("CITY"));
 		d.findElement(By.xpath("//input[@id='pinNum']")).sendKeys(UtilityMethod.getproperty("PINCODE"));
+		js.executeScript("window.scrollBy(0,500)");
 		d.findElement(By.xpath("//tr[@id='st']//i")).click();
 		Thread.sleep(3000);
 		
@@ -130,5 +135,6 @@ public class BranchCreation {
 	}
 		    	// d.findElement(By.xpath("//button[@type='button' and contains(@onclick,'saveBranch') ]")).click();
 		 	//d.close();
+		    	 
 
 }}}
