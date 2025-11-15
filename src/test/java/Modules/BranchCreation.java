@@ -43,34 +43,32 @@ public class BranchCreation {
 		} catch(NoAlertPresentException e) {
 		System.out.println("No alert appeared.");}
 		Thread.sleep(3000);
-		d.findElement(By.xpath("//img[@title='Master']")).click();
+		lg.Masterbt().click();
 		Thread.sleep(3000);
-		d.findElement(By.xpath("//h4[@class='cls_sidebar_menu_text' and contains(., 'Auditee')]")).click();
-		//d.findElements(By.partialLinkText("listbranch.htm?menuOptId=501"))
-		WebElement branchMaster = d.findElement(By.linkText("Branch Master"));
-		branchMaster.click();
-		d.findElement(By.xpath("//button[@onclick='addbranch();']")).click();
-		d.findElement(By.xpath("//input[@id='brancd']")).sendKeys(UtilityMethod.getproperty("BRCODE"));
-		d.findElement(By.xpath("//input[@id='brannm']")).sendKeys(UtilityMethod.getproperty("BRNAME"));
-		Select branch = new Select(d.findElement(By.xpath("//select[@id='mainCd']")));
+		lg.auditeebt().click();
+		lg.branchbt().click();
+		lg.addbrnchbt().click();
+		lg.branchcd().sendKeys(UtilityMethod.getproperty("BRCODE"));
+		lg.branchname().sendKeys(UtilityMethod.getproperty("BRNAME"));
+		Select branch = new Select(lg.brtype());
 		branch.selectByValue("MAIN");
-		d.findElement(By.xpath("//input[@id='address1']")).sendKeys(UtilityMethod.getproperty("Address"));
+		lg.addredss().sendKeys(UtilityMethod.getproperty("Address"));
 		JavascriptExecutor js = (JavascriptExecutor) d;
 		js.executeScript("window.scrollBy(0,500)");
-		d.findElement(By.xpath("//input[@id='bsrcode']")).sendKeys(UtilityMethod.getproperty("BSR"));
-		d.findElement(By.xpath("//input[@id='opendate']")).click();
+		lg.bscode().sendKeys(UtilityMethod.getproperty("BSR"));
+		lg.datecal().click();
 		
 		// Select Year
 		Thread.sleep(3000);
-		Select year = new Select(d.findElement(By.xpath("//select[@title='Change the year']")));
+		Select year = new Select (lg.selyear());
 		year.selectByVisibleText(UtilityMethod.getproperty("YEAR"));
 		Thread.sleep(3000);
 		// Select Month
-		Select month = new Select(d.findElement(By.xpath("//select[@title='Change the month']")));
+		Select month = new Select(lg.selmonth());
 		month.selectByVisibleText(UtilityMethod.getproperty("MONTH"));
 
 		// Select Day
-	List<WebElement> day = d.findElements(By.xpath("//div[@class='datepick-month']//tbody//td"));
+		List<WebElement> day = lg.seldate();
 	
 	for(WebElement dd: day) {
 		if(dd.getText().equalsIgnoreCase(UtilityMethod.getproperty("DAY"))) {
@@ -78,17 +76,17 @@ public class BranchCreation {
 			break;
 		}
 	}
-		Select BRType =new Select(d.findElement(By.xpath("//select[@id='catogry']")));
+	  Select BRType =new Select(lg.catagr());
 		BRType.selectByVisibleText(UtilityMethod.getproperty("BRTYPE"));
-		Select RBIAtype=new Select(d.findElement(By.xpath("//select[@id='rbiaType']")));
+		Select RBIAtype=new Select(lg.rbiatyp());
 		RBIAtype.selectByVisibleText(UtilityMethod.getproperty("RBIATYPE"));
-		d.findElement(By.xpath("//input[@id='city']")).sendKeys(UtilityMethod.getproperty("CITY"));
-		d.findElement(By.xpath("//input[@id='pinNum']")).sendKeys(UtilityMethod.getproperty("PINCODE"));
+		lg.citytyp().sendKeys(UtilityMethod.getproperty("CITY"));
+		lg.pincode().sendKeys(UtilityMethod.getproperty("PINCODE"));
 		js.executeScript("window.scrollBy(0,500)");
-		d.findElement(By.xpath("//tr[@id='st']//i")).click();
+		lg.statedt().click();
 		Thread.sleep(3000);
 		
-		 List<WebElement> State = d.findElements(By.xpath("//div[@class='popupcontent p-b-b']//ul[@class='listitem']/li"));		Thread.sleep(3000);
+		List<WebElement> State = lg.liststs();	Thread.sleep(3000);
 
 		 for(WebElement st:State)
 		 {
@@ -100,8 +98,8 @@ public class BranchCreation {
 		 Thread.sleep(3000);
 		
 			
-			  d.findElement(By.xpath("//tr[@id='dist']//i")).click();
-			  List<WebElement>District = d.findElements(By.xpath("//div[@class='popupcontent p-b-b']//ul[@class='listitem']/li"));
+			  lg.distric().click();
+			  List<WebElement>District = lg.ditlist();
 			  
 			  for(WebElement DI:District) { 
 				  if(DI.getText().contains(UtilityMethod.getproperty("DISTRICT")))
@@ -110,19 +108,19 @@ public class BranchCreation {
 			  break;
 			  } } 
 			  Thread.sleep(3000);
-			  d.findElement(By.xpath("//input[@id='email']")).sendKeys(UtilityMethod.getproperty("EMAIL"));
+			    lg.email().sendKeys(UtilityMethod.getproperty("EMAIL"));
 			  Thread.sleep(3000);
-			  Select Foreign = new Select(d.findElement(By.xpath("//select[@id='forEx']")));
+			  Select Foreign = new Select(lg.ForeignEXC());
 			  Foreign.selectByVisibleText(UtilityMethod.getproperty("FOREIGN"));
-			 d.findElement(By.xpath("//input[@id='fromval']")).sendKeys(UtilityMethod.getproperty("FROM"));
-			  d.findElement(By.xpath("//input[@id='toval']")).sendKeys(UtilityMethod.getproperty("TO"));
-			  Select Weekly=new Select(d.findElement(By.xpath("//select[@id='wklyFull']")));
+			  lg.fromdt().sendKeys(UtilityMethod.getproperty("FROM"));
+			  lg.todt().sendKeys(UtilityMethod.getproperty("TO"));
+			  Select Weekly=new Select(lg.Week());
 			  Weekly.selectByVisibleText(UtilityMethod.getproperty("WEEK"));
 			  Thread.sleep(3000); 
-			
-			  d.findElement(By.xpath("//tr[@id='zo']//i")).click();
+			 
+			 lg.Attach().click();
 			  Thread.sleep(3000);
-			  List<WebElement> Attached = d.findElements(By.xpath("//div[@class='popupcontent p-b-b']//ul[@class='listitem']/li"));
+			  List<WebElement> Attached = lg.Attachlst();
 			  for(WebElement AT:Attached)
 			  {
 				  if(AT.getText().contains(UtilityMethod.getproperty("ATTACH")))
@@ -130,15 +128,18 @@ public class BranchCreation {
 			  break; } }
 			  
 			  Thread.sleep(3000);
-		     d.findElement(By.xpath("//tr[@id='bc']//i")).click();
-		     List<WebElement>Category = d.findElements(By.xpath("//div[@class='popupcontent p-b-b']//ul[@class='listitem']/li"));
+		    lg.Branchca().click();
+		     List<WebElement>Category = lg.Branchlst();
 		     for(WebElement CA:Category )
 		     {
 		    	 if(CA.getText().contains(UtilityMethod.getproperty("CATE")))
 		    	 {CA.click();
 	}
-		    	// d.findElement(By.xpath("//button[@type='button' and contains(@onclick,'saveBranch') ]")).click();
+		    	 lg.savebty() .click();
 		 	//d.close();
 		    	 
 
-}}}
+}
+	}
+
+}

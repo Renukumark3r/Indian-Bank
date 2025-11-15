@@ -43,15 +43,16 @@ public class dummy {
 		} catch(NoAlertPresentException e) {
 		System.out.println("No alert appeared.");}
 		Thread.sleep(3000);
-		lg.Masterbt().click();
+		d.findElement(By.xpath("//img[@title='Master']")).click();
 		Thread.sleep(3000);
-		lg.auditeebt().click();
+		d.findElement(By.xpath("//h4[@class='cls_sidebar_menu_text' and contains(., 'Auditee')]")).click();
+		//d.findElements(By.partialLinkText("listbranch.htm?menuOptId=501"))
 		WebElement branchMaster = d.findElement(By.linkText("Branch Master"));
 		branchMaster.click();
 		d.findElement(By.xpath("//button[@onclick='addbranch();']")).click();
 		d.findElement(By.xpath("//input[@id='brancd']")).sendKeys(UtilityMethod.getproperty("BRCODE"));
 		d.findElement(By.xpath("//input[@id='brannm']")).sendKeys(UtilityMethod.getproperty("BRNAME"));
-		/*Select branch = new Select(d.findElement(By.xpath("//select[@id='mainCd']")));
+		Select branch = new Select(d.findElement(By.xpath("//select[@id='mainCd']")));
 		branch.selectByValue("MAIN");
 		d.findElement(By.xpath("//input[@id='address1']")).sendKeys(UtilityMethod.getproperty("Address"));
 		JavascriptExecutor js = (JavascriptExecutor) d;
@@ -140,7 +141,4 @@ public class dummy {
 		 	//d.close();
 		    	 
 
-}*/
-	}
-
-}
+}}}
