@@ -43,102 +43,20 @@ public class dummy {
 		} catch(NoAlertPresentException e) {
 		System.out.println("No alert appeared.");}
 		Thread.sleep(3000);
-		d.findElement(By.xpath("//img[@title='Master']")).click();
-		Thread.sleep(3000);
-		d.findElement(By.xpath("//h4[@class='cls_sidebar_menu_text' and contains(., 'Auditee')]")).click();
-		//d.findElements(By.partialLinkText("listbranch.htm?menuOptId=501"))
-		WebElement branchMaster = d.findElement(By.linkText("Branch Master"));
-		branchMaster.click();
-		d.findElement(By.xpath("//button[@onclick='addbranch();']")).click();
-		d.findElement(By.xpath("//input[@id='brancd']")).sendKeys(UtilityMethod.getproperty("BRCODE"));
-		d.findElement(By.xpath("//input[@id='brannm']")).sendKeys(UtilityMethod.getproperty("BRNAME"));
-		Select branch = new Select(d.findElement(By.xpath("//select[@id='mainCd']")));
-		branch.selectByValue("MAIN");
-		d.findElement(By.xpath("//input[@id='address1']")).sendKeys(UtilityMethod.getproperty("Address"));
-		JavascriptExecutor js = (JavascriptExecutor) d;
-		js.executeScript("window.scrollBy(0,500)");
-		d.findElement(By.xpath("//input[@id='bsrcode']")).sendKeys(UtilityMethod.getproperty("BSR"));
-		d.findElement(By.xpath("//input[@id='opendate']")).click();
-		
-		// Select Year
-		Thread.sleep(3000);
-		Select year = new Select(d.findElement(By.xpath("//select[@title='Change the year']")));
-		year.selectByVisibleText(UtilityMethod.getproperty("YEAR"));
-		Thread.sleep(3000);
-		// Select Month
-		Select month = new Select(d.findElement(By.xpath("//select[@title='Change the month']")));
-		month.selectByVisibleText(UtilityMethod.getproperty("MONTH"));
-
-		// Select Day
-	List<WebElement> day = d.findElements(By.xpath("//div[@class='datepick-month']//tbody//td"));
-	
-	for(WebElement dd: day) {
-		if(dd.getText().equalsIgnoreCase(UtilityMethod.getproperty("DAY"))) {
-			dd.click();
-			break;
-		}
+	 	lg.Masterbt().click();
+ 		Thread.sleep(3000);
+ 		lg.auditeebt().click();
+ 		d.findElement(By.xpath("//h4[@class='cls_sidebar_menu_text' and contains(.,'Module Mapping')]")).click();
+   // d.findElement(By.xpath("//input[@id='searchid']")).sendKeys("121125");
+    	List<WebElement> Module =d.findElements(By.xpath("//input[@id='searchid']"));Thread.sleep(3000);
+    	for(WebElement mod:Module) {
+    		if(mod.getText().contains("121125"))
+    		{
+    			mod.click();
+    			break;
+    			}
+          }
+    //	List<WebElement> rows=d.findElements(null)
+    	
 	}
-		Select BRType =new Select(d.findElement(By.xpath("//select[@id='catogry']")));
-		BRType.selectByVisibleText(UtilityMethod.getproperty("BRTYPE"));
-		Select RBIAtype=new Select(d.findElement(By.xpath("//select[@id='rbiaType']")));
-		RBIAtype.selectByVisibleText(UtilityMethod.getproperty("RBIATYPE"));
-		d.findElement(By.xpath("//input[@id='city']")).sendKeys(UtilityMethod.getproperty("CITY"));
-		d.findElement(By.xpath("//input[@id='pinNum']")).sendKeys(UtilityMethod.getproperty("PINCODE"));
-		js.executeScript("window.scrollBy(0,500)");
-		d.findElement(By.xpath("//tr[@id='st']//i")).click();
-		Thread.sleep(3000);
-		
-		 List<WebElement> State = d.findElements(By.xpath("//div[@class='popupcontent p-b-b']//ul[@class='listitem']/li"));		Thread.sleep(3000);
-
-		 for(WebElement st:State)
-		 {
-			 if(st.getText().equalsIgnoreCase(UtilityMethod.getproperty("STATE"))) {
-				 st.click();
-					 break;
-			 }
-		 }
-		 Thread.sleep(3000);
-		
-			
-			  d.findElement(By.xpath("//tr[@id='dist']//i")).click();
-			  List<WebElement>District = d.findElements(By.xpath("//div[@class='popupcontent p-b-b']//ul[@class='listitem']/li"));
-			  
-			  for(WebElement DI:District) { 
-				  if(DI.getText().contains(UtilityMethod.getproperty("DISTRICT")))
-				  { 
-					  DI.click();
-			  break;
-			  } } 
-			  Thread.sleep(3000);
-			  d.findElement(By.xpath("//input[@id='email']")).sendKeys(UtilityMethod.getproperty("EMAIL"));
-			  Thread.sleep(3000);
-			  Select Foreign = new Select(d.findElement(By.xpath("//select[@id='forEx']")));
-			  Foreign.selectByVisibleText(UtilityMethod.getproperty("FOREIGN"));
-			 d.findElement(By.xpath("//input[@id='fromval']")).sendKeys(UtilityMethod.getproperty("FROM"));
-			  d.findElement(By.xpath("//input[@id='toval']")).sendKeys(UtilityMethod.getproperty("TO"));
-			  Select Weekly=new Select(d.findElement(By.xpath("//select[@id='wklyFull']")));
-			  Weekly.selectByVisibleText(UtilityMethod.getproperty("WEEK"));
-			  Thread.sleep(3000); 
-			
-			  d.findElement(By.xpath("//tr[@id='zo']//i")).click();
-			  Thread.sleep(3000);
-			  List<WebElement> Attached = d.findElements(By.xpath("//div[@class='popupcontent p-b-b']//ul[@class='listitem']/li"));
-			  for(WebElement AT:Attached)
-			  {
-				  if(AT.getText().contains(UtilityMethod.getproperty("ATTACH")))
-			  { AT.click();
-			  break; } }
-			  
-			  Thread.sleep(3000);
-		     d.findElement(By.xpath("//tr[@id='bc']//i")).click();
-		     List<WebElement>Category = d.findElements(By.xpath("//div[@class='popupcontent p-b-b']//ul[@class='listitem']/li"));
-		     for(WebElement CA:Category )
-		     {
-		    	 if(CA.getText().contains(UtilityMethod.getproperty("CATE")))
-		    	 {CA.click();
-	}
-		    	// d.findElement(By.xpath("//button[@type='button' and contains(@onclick,'saveBranch') ]")).click();
-		 	//d.close();
-		    	 
-
-}}}
+}

@@ -135,9 +135,8 @@ public class BranchCreation {
 		    	 if(CA.getText().contains(UtilityMethod.getproperty("CATE")))
 		    	 {CA.click();
 	}
-		    	 lg.savebty() .click();
-		 	//d.close();
-		    	 
+		    	// lg.savebty() .click();
+		   
 
 }
 	}
