@@ -47,8 +47,8 @@ public class dummy {
  		Thread.sleep(3000);
  		lg.auditeebt().click();
  		d.findElement(By.xpath("//h4[@class='cls_sidebar_menu_text' and contains(.,'Module Mapping')]")).click();
-   // d.findElement(By.xpath("//input[@id='searchid']")).sendKeys("121125");
-    	List<WebElement> Module =d.findElements(By.xpath("//input[@id='searchid']"));Thread.sleep(3000);
+        d.findElement(By.xpath("//input[@id='searchid']")).sendKeys("121125");
+    	List<WebElement> Module =d.findElements(By.xpath("//div[@class='search']//ul"));Thread.sleep(3000);
     	for(WebElement mod:Module) {
     		if(mod.getText().contains("121125"))
     		{
@@ -56,7 +56,17 @@ public class dummy {
     			break;
     			}
           }
-    //	List<WebElement> rows=d.findElements(null)
+        List<WebElement> modulelst=d.findElements(By.xpath("//tbody[@class='sticky_tbody']/tr"));Thread.sleep(3000);
+        	for(WebElement row:modulelst) {Thread.sleep(3000);
+        		if(row.getText().contains("Risk")) {
+        			WebElement radio =row.findElement(By.xpath(".//input[contains(@id,'checkFlag')]"));
+        			radio.click();
+        			break;
+        		}Thread.sleep(3000);
+        	}
+        	d.findElement(By.xpath("//button[@type='button' and contains(.,'SAVE')]")).click();
+        	//System.out.println("Module mapping done");
+        
     	
 	}
 }
