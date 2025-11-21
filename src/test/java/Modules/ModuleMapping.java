@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import genericLibraries.UtilityMethod;
 import genericLibraries.login;
 
-public class dummy {
+public class ModuleMapping {
 
 
 	public static void main(String[] args) throws InterruptedException, IOException {
@@ -39,27 +39,27 @@ public class dummy {
 	 	lg.Masterbt().click();
  		Thread.sleep(3000);
  		lg.auditeebt().click();
- 		d.findElement(By.xpath("//h4[@class='cls_sidebar_menu_text' and contains(.,'Zone Master')]")).click();		Thread.sleep(3000);
-
-        d.findElement(By.xpath("//button[@type='button' and contains(.,'Add')]")).click();
-        WebElement zoneCode = d.findElement(By.id("zoneCode"));
-        zoneCode.clear();
-        zoneCode.sendKeys("1222POL");
-
-        WebElement zoneName = d.findElement(By.id("zoneName"));
-        zoneName.click();         // Force focus
-        Thread.sleep(500);
-        zoneName.sendKeys("Polur");
-        d.findElement(By.xpath("//input[@id='email']")).sendKeys("renukumat@ncssoft.in");
-        d.findElement(By.xpath("//td[@class='lblval dtlData']//i")).click();Thread.sleep(3000);
-        List<WebElement> ics=d.findElements(By.xpath("//div[@class='popupcontent p-b-b']//ul[@class='listitem']//li"));
-        for(WebElement ic:ics) {
-        	if(ic.getText().contains("CBI")) {
-        		ic.click();
-        		break;
+ 		d.findElement(By.xpath("//h4[@class='cls_sidebar_menu_text' and contains(.,'Module Mapping')]")).click();
+        d.findElement(By.xpath("//input[@id='searchid']")).sendKeys("121125");
+    	List<WebElement> Module =d.findElements(By.xpath("//div[@class='search']//ul"));Thread.sleep(3000);
+    	for(WebElement mod:Module) {
+    		if(mod.getText().contains("121125"))
+    		{
+    			mod.click();
+    			break;
+    			}
+          }
+        List<WebElement> modulelst=d.findElements(By.xpath("//tbody[@class='sticky_tbody']/tr"));Thread.sleep(3000);
+        	for(WebElement row:modulelst) {Thread.sleep(3000);
+        		if(row.getText().contains("Risk")) {
+        			WebElement radio =row.findElement(By.xpath(".//input[contains(@id,'checkFlag')]"));
+        			radio.click();
+        			break;
+        		}Thread.sleep(3000);
         	}
-        }
-        d.findElement(By.xpath("//button[@type='button' and contains(.,'SAVE')]")).click();
-        		
+        //	d.findElement(By.xpath("//table[@id='pagination']//button")).click();
+        	//System.out.println("Module mapping done");
+        
+    	
 	}
 }

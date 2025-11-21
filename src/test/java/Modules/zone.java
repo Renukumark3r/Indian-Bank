@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import genericLibraries.UtilityMethod;
 import genericLibraries.login;
 
-public class dummy {
+public class zone {
 
 
 	public static void main(String[] args) throws InterruptedException, IOException {
