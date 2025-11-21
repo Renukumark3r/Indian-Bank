@@ -24,8 +24,8 @@ public class dummy {
 		login lg=new login(d);
 		d.get("https://192.9.200.27:2322/IB_12_4/login.htm");
 		d.manage().window().maximize();
-		lg.getUsername().sendKeys(UtilityMethod.getproperty("UN"));
-		lg.getpassword().sendKeys(UtilityMethod.getproperty("PWD"));
+		lg.getUsername().sendKeys("COUSER26");
+		lg.getpassword().sendKeys("1234");
 		lg.loginbt().click();
 		Thread.sleep(3000);
 		try {
@@ -36,30 +36,27 @@ public class dummy {
 		} catch(NoAlertPresentException e) {
 		System.out.println("No alert appeared.");}
 		Thread.sleep(3000);
-	 	lg.Masterbt().click();
- 		Thread.sleep(3000);
- 		lg.auditeebt().click();
- 		d.findElement(By.xpath("//h4[@class='cls_sidebar_menu_text' and contains(.,'Zone Master')]")).click();		Thread.sleep(3000);
+		List<WebElement> modules = d.findElements(By.xpath("//div[@class='cls_ms_box_wrap']"));
 
-        d.findElement(By.xpath("//button[@type='button' and contains(.,'Add')]")).click();
-        WebElement zoneCode = d.findElement(By.id("zoneCode"));
-        zoneCode.clear();
-        zoneCode.sendKeys("1222POL");
+		for (WebElement mod : modules) {
+		    String name = mod.getText().trim();
+		    System.out.println(name);
+		    if (name.contains("Management")) {
+		        mod.click();
+		        break;
+		    }
+		
+	 	}
+        	List<WebElement> submod=d.findElements(By.xpath("//a[@class='userhomehref']"));
+		   
 
-        WebElement zoneName = d.findElement(By.id("zoneName"));
-        zoneName.click();         // Force focus
-        Thread.sleep(500);
-        zoneName.sendKeys("Polur");
-        d.findElement(By.xpath("//input[@id='email']")).sendKeys("renukumat@ncssoft.in");
-        d.findElement(By.xpath("//td[@class='lblval dtlData']//i")).click();Thread.sleep(3000);
-        List<WebElement> ics=d.findElements(By.xpath("//div[@class='popupcontent p-b-b']//ul[@class='listitem']//li"));
-        for(WebElement ic:ics) {
-        	if(ic.getText().contains("CBI")) {
-        		ic.click();
-        		break;
+        	for(WebElement sub:submod) {
+        		String mod1=sub.getText().trim(); System.out.println("sos1");
+    		    System.out.println(mod1);
+        		if(mod1.contains("Management Audit - Zone CI")) {
+        			sub.click();
+        			break;
+        		}
         	}
-        }
-        d.findElement(By.xpath("//button[@type='button' and contains(.,'SAVE')]")).click();
-        		
 	}
 }
