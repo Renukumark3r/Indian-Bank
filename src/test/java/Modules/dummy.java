@@ -51,12 +51,28 @@ public class dummy {
 		   
 
         	for(WebElement sub:submod) {
-        		String mod1=sub.getText().trim(); System.out.println("sos1");
-    		    System.out.println(mod1);
-        		if(mod1.contains("Management Audit - Zone CI")) {
+        		String mod1=sub.getText().trim(); 
+    		    //System.out.println(mod1);
+        		if(mod1.contains("Management Audit - Zone")) {
         			sub.click();
         			break;
         		}
         	}
+        	
+        	d.findElement(By.xpath("//div[@class='cls_menu_level1_options' and contains(.,'Audit')]")).click();
+        	d.findElement(By.xpath("//a[text()='Audit Schedule']")).click();Thread.sleep(3000);
+        	d.findElement(By.xpath("//input[@id='auditDue']")).sendKeys("100");
+        	d.findElement(By.xpath("//button[text()='Generate']")).click();
+        	d.findElement(By.xpath("//input[@id='searchid']")).click();Thread.sleep(3000);
+        	List<WebElement> search=d.findElements(By.xpath("//div[@class='search']//ul[@class='listitem']/li"));Thread.sleep(3000);
+        	for(WebElement sea:search) {System.out.print(sea);
+        	  sea.clear();
+        		if(sea.getText().equalsIgnoreCase("RANIPET")) {
+        			sea.click();
+        			break;
+        		}
+        	}
+        	
+        	
 	}
 }
