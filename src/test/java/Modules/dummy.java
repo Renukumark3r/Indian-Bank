@@ -1,14 +1,18 @@
 package Modules;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import genericLibraries.UtilityMethod;
 import genericLibraries.login;
@@ -40,7 +44,7 @@ public class dummy {
 
 		for (WebElement mod : modules) {
 		    String name = mod.getText().trim();
-		    System.out.println(name);
+		   // System.out.println(name);
 		    if (name.contains("Management")) {
 		        mod.click();
 		        break;
@@ -63,15 +67,21 @@ public class dummy {
         	d.findElement(By.xpath("//a[text()='Audit Schedule']")).click();Thread.sleep(3000);
         	d.findElement(By.xpath("//input[@id='auditDue']")).sendKeys("100");
         	d.findElement(By.xpath("//button[text()='Generate']")).click();
-        	d.findElement(By.xpath("//input[@id='searchid']")).click();Thread.sleep(3000);
-        	List<WebElement> search=d.findElements(By.xpath("//div[@class='search']//ul[@class='listitem']/li"));Thread.sleep(3000);
-        	for(WebElement sea:search) {System.out.print(sea);
-        	  sea.clear();
-        		if(sea.getText().equalsIgnoreCase("RANIPET")) {
+        	d.findElement(By.xpath("//input[@id='searchid']")).sendKeys("0825");
+        	Thread.sleep(500); 
+        	List<WebElement> search=d.findElements(By.xpath("//div[@class='search']//ul[@class='listitem']/li"));
+        	
+        	Thread.sleep(2000);
+        	
+        	for(WebElement sea:search) {
+        		if(sea.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
         			sea.click();
         			break;
         		}
         	}
+        	WebElement radio=d.findElement(By.xpath("//input[@class='rowChkBox']"));
+        	radio.click();
+        	// Click the search field
         	
         	
 	}
