@@ -79,10 +79,35 @@ public class dummy {
         			break;
         		}
         	}
-        	WebElement radio=d.findElement(By.xpath("//input[@class='rowChkBox']"));
-        	radio.click();
-        	// Click the search field
-        	
+
+        	List<WebElement> rows = d.findElements(By.xpath("//tr[contains(@class,'Rows')]"));
+        	System.out.println("Rows count: " + rows.size());
+        	for(WebElement lstrows:rows) {
+        		if(lstrows.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
+        			WebElement checkbox = lstrows.findElement(By.xpath(".//input[@type='checkbox']"));
+        			
+        			Thread.sleep(500);
+        			checkbox.click();
+        		}
+        	}
+        	for(WebElement lstrows:rows) {
+                if(lstrows.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
+    			WebElement checkbox = lstrows.findElement(By.xpath(".//a[@title='Team Leader']//i"));
+    			Thread.sleep(500);
+    			checkbox.click();
+    		}
+    	}
+        	List<WebElement> lsttl = d.findElements(By.xpath("//input[@id='teamLeadFiSearch']"));
+        	System.out.println("Rows count: " + lsttl.size());
+
+        	for (WebElement TLlst : lsttl) {
+        	    if (TLlst.getAttribute("value").equalsIgnoreCase("00022")) {
+        	        TLlst.click();
+        	        break;
+        		}
+        		
+        	}
+
         	
 	}
 }
