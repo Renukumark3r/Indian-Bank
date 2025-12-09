@@ -97,17 +97,53 @@ public class dummy {
     			checkbox.click();
     		}
     	}
-        	List<WebElement> lsttl = d.findElements(By.xpath("//input[@id='teamLeadFiSearch']"));
-        	System.out.println("Rows count: " + lsttl.size());
+        	//d.findElement(By.xpath("//input[@id='teamLeadFiSearch']")).sendKeys("1515");
+         	List<WebElement> lsttl = d.findElements(By.xpath(".//ul[@class='listitem']/li"));Thread.sleep(1000);
+        	System.out.println("Rows countlsttl: " + lsttl.size());
 
         	for (WebElement TLlst : lsttl) {
-        	    if (TLlst.getAttribute("value").equalsIgnoreCase("00022")) {
-        	        TLlst.click();
+        	    if (TLlst.getAttribute("id").equals("1515")) {
+        	        System.out.println("TL: " + TLlst);
+        	        TLlst.findElement(By.xpath(".//input[@type='radio']")).click();
         	        break;
-        		}
-        		
+        	    }
         	}
+        	try {
+        		
+        	
+        	Alert Al=d.switchTo().alert();
+        	Al.accept();
 
+        	} catch(NoAlertPresentException e) {
+        		System.out.println("No alert present in Team Lead Selection.");
+        	}
+    		Thread.sleep(3000);
+
+        	for(WebElement lstrows:rows) {
+                if(lstrows.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
+        	WebElement FromDate = d.findElement(By.xpath(".//input[contains(@id,'fromDate')]"));
+			((JavascriptExecutor) d).executeScript("arguments[0].scrollIntoView(true);", FromDate);
+			FromDate.click();
+                }
+        	}
+       
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
         	
 	}
 }
