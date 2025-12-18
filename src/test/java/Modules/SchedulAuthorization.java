@@ -20,7 +20,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import genericLibraries.UtilityMethod;
 import genericLibraries.login;
 
-public class dummy {
+public class SchedulAuthorization  {
 
 
 	public static void main(String[] args) throws InterruptedException, IOException {
@@ -67,7 +67,7 @@ public class dummy {
         	}
         	
         	
-        	/*d.findElement(By.xpath("//div[@class='cls_menu_level1_options' and contains(.,'Audit')]")).click();
+        	d.findElement(By.xpath("//div[@class='cls_menu_level1_options' and contains(.,'Audit')]")).click();
         	d.findElement(By.xpath("//a[text()='Audit Schedule Authorization']")).click();
         	d.findElement(By.xpath("//select[@id='zoneCode']")).click();
         	//d.findElement(By.xpath("//select[@id='zoneCode']/option[@value='0825']")).click();
@@ -87,25 +87,8 @@ public class dummy {
         	}
     		d.findElement(By.xpath("//button[@onclick='saveData();']")).click();
     		System.out.println("Schedule authorization save sucessfully " );
+   
         	
-        	
-        	
-        	        	*/
-        	/*d.findElement(By.xpath("//img[@title='Logout']")).click();
-        	Alert alert = d.switchTo().alert();
-        	System.out.println(alert.getText());
-        	alert.accept(); */
-        	WebDriverWait wait = new WebDriverWait(d, Duration.ofSeconds(15));
-
-        	// wait for modal popup to disappear
-        	//wait.until(ExpectedConditions.invisibilityOfElementLocated(
-        	//    By.id("modallogininfo")
-        	//));
-
-        	// click logout
-        	WebElement logout = wait.until(ExpectedConditions.elementToBeClickable(
-        	    By.xpath("//img[@title='Logout']")
-        	));
-        	logout.click();
+        	        	
 	}
 }
