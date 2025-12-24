@@ -103,9 +103,6 @@ public class dummy {
         	//));
 
         	// click logout
-        	WebElement logout = wait.until(ExpectedConditions.elementToBeClickable(
-        	    By.xpath("//img[@title='Logout']")
-        	));
-        	logout.click();
+        	//d.get("logout.htm?menuOptId=56");
 	}
 }

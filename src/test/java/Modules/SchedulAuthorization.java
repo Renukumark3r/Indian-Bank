@@ -88,7 +88,26 @@ public class SchedulAuthorization  {
     		d.findElement(By.xpath("//button[@onclick='saveData();']")).click();
     		System.out.println("Schedule authorization save sucessfully " );
    
-        	
-        	        	
+        	/*WebDriverWait wait = new WebDriverWait(d, Duration.ofSeconds(15));
+
+    		WebElement logout = wait.until(ExpectedConditions.elementToBeClickable(
+            	    By.xpath("//img[@title='Logout']")
+            	));
+            	logout.click();*/
+    		//d.get("logout.htm?menuOptId=56");
+    		By logoutBtn = By.xpath("//img[@title='Logout']");
+    		By modal = By.id("modallogininfo");
+
+    		WebDriverWait wait = new WebDriverWait(d, Duration.ofSeconds(20));
+
+    		// wait until modal disappears (if present)
+    		wait.until(ExpectedConditions.invisibilityOfElementLocated(modal));
+
+    		// re-find and click
+    		WebElement logout = wait.until(ExpectedConditions.elementToBeClickable(logoutBtn));
+    		((JavascriptExecutor) d).executeScript("arguments[0].click();", logout);
+    		Alert alert = d.switchTo().alert();
+        	System.out.println(alert.getText());
+        	alert.accept();
 	}
 }
