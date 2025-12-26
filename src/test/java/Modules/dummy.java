@@ -3,6 +3,7 @@ package Modules;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.Random;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -31,7 +32,7 @@ public class dummy {
 		login lg=new login(d);
 		d.get("https://192.9.200.27:2322/IB_12_4/login.htm");
 		d.manage().window().maximize();
-		lg.getUsername().sendKeys("COUSER26");
+		lg.getUsername().sendKeys("1515");
 		lg.getpassword().sendKeys("1234");
 		lg.loginbt().click();
 		Thread.sleep(3000);
@@ -65,44 +66,50 @@ public class dummy {
         			break;
         		}
         	}
-        	
-        	
-        	/*d.findElement(By.xpath("//div[@class='cls_menu_level1_options' and contains(.,'Audit')]")).click();
-        	d.findElement(By.xpath("//a[text()='Audit Schedule Authorization']")).click();
-        	d.findElement(By.xpath("//select[@id='zoneCode']")).click();
-        	//d.findElement(By.xpath("//select[@id='zoneCode']/option[@value='0825']")).click();
-        	String val="0825";
-        	Select drop=new Select(d.findElement(By.xpath("//select[@id='zoneCode']")));
-        	drop.selectByValue(val);
-        	
-        	List<WebElement> shrows = d.findElements(By.xpath("//tr[contains(@class,'Rows')]"));
-        	System.out.println("Rows count: " + shrows.size());
-        	for(WebElement shlstrows:shrows) {
-        		if(shlstrows.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
-                WebElement checkbox = shlstrows.findElement(By.xpath(".//input[@type='checkbox']"));
-        			
-        			Thread.sleep(500);
-        			checkbox.click();
+        	d.findElement(By.xpath("//input[@id='branchsearch']")).sendKeys("0825");
+        	Thread.sleep(500); 
+        	List<WebElement> lsbranch=d.findElements(By.xpath("//tbody[@class='sticky_tbody']//a"));
+        	for(WebElement lsbranchs:lsbranch) {
+        		if(lsbranchs.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
+        			lsbranchs.click();
+        			break;
         		}
         	}
-    		d.findElement(By.xpath("//button[@onclick='saveData();']")).click();
-    		System.out.println("Schedule authorization save sucessfully " );
-        	
-        	
-        	
-        	        	*/
-        	/*d.findElement(By.xpath("//img[@title='Logout']")).click();
-        	Alert alert = d.switchTo().alert();
-        	System.out.println(alert.getText());
-        	alert.accept(); */
-        	WebDriverWait wait = new WebDriverWait(d, Duration.ofSeconds(15));
 
-        	// wait for modal popup to disappear
-        	//wait.until(ExpectedConditions.invisibilityOfElementLocated(
-        	//    By.id("modallogininfo")
-        	//));
+        	//d.findElement(By.xpath("//img[@title='Audit']")).click();
+        	//d.findElement(By.xpath("//a[text()='Audit Commencement']")).click();	Thread.sleep(5000);
+        	//d.findElement(By.xpath("//input[@id='btnsubmit']")).click();Thread.sleep(5000);
+        	d.findElement(By.xpath("//img[@title='Audit']")).click();
+        	d.findElement(By.xpath("//a[text()='Audit Observation']")).click();
+        	d.findElement(By.xpath("//input[@id='prodSelectAll']")).click();
+        	d.findElement(By.xpath("//button[@id='nextbtn']")).click();
+        	Random rand =new Random();
+        	List<WebElement> rows = d.findElements(By.xpath("//div[contains(@class,'checklist')]//tr"));
+        	if(rows.size()==0)
+        	{
+        		 throw new RuntimeException("No checklist rows found");
+        	}
+        	// 2️⃣ Pick random row
+        	WebElement randomRow = rows.get(rand.nextInt(rows.size()));
 
-        	// click logout
-        	//d.get("logout.htm?menuOptId=56");
-	}
+        	// 3️⃣ Select random risk (LOW / MEDIUM / HIGH)
+        	WebElement riskDropdown = randomRow.findElement(By.tagName("select"));
+        	Select riskSelect = new Select(riskDropdown);
+
+        	String[] risks = {"LOW", "MEDIUM", "HIGH"};
+        	String randomRisk = risks[rand.nextInt(risks.length)];
+        	riskSelect.selectByVisibleText(randomRisk);
+        	WebElement remarkField = randomRow.findElement(
+        		    By.xpath(".//textarea | .//input[@type='text']")
+        		);
+
+        		remarkField.clear();
+        		remarkField.sendKeys("Automated remark added for testing");
+
+        		// 5️⃣ Scroll into view (optional but safe)
+        		((JavascriptExecutor) d).executeScript(
+        		    "arguments[0].scrollIntoView(true);", randomRow
+        		);
+
+        	}
 }
