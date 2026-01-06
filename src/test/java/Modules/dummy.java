@@ -2,7 +2,9 @@ package Modules;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.openqa.selenium.Alert;
@@ -66,11 +68,11 @@ public class dummy {
         			break;
         		}
         	}
-        	d.findElement(By.xpath("//input[@id='branchsearch']")).sendKeys("0825");
+        	d.findElement(By.xpath("//input[@id='branchsearch']")).sendKeys("ZONE001");
         	Thread.sleep(500); 
         	List<WebElement> lsbranch=d.findElements(By.xpath("//tbody[@class='sticky_tbody']//a"));
         	for(WebElement lsbranchs:lsbranch) {
-        		if(lsbranchs.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
+        		if(lsbranchs.getText().equalsIgnoreCase("ZONE001-VELACHERY")) {
         			lsbranchs.click();
         			break;
         		}
@@ -83,33 +85,57 @@ public class dummy {
         	d.findElement(By.xpath("//a[text()='Audit Observation']")).click();
         	d.findElement(By.xpath("//input[@id='prodSelectAll']")).click();
         	d.findElement(By.xpath("//button[@id='nextbtn']")).click();
-        	Random rand =new Random();
-        	List<WebElement> rows = d.findElements(By.xpath("//div[contains(@class,'checklist')]//tr"));
-        	if(rows.size()==0)
-        	{
-        		 throw new RuntimeException("No checklist rows found");
-        	}
-        	// 2️⃣ Pick random row
-        	WebElement randomRow = rows.get(rand.nextInt(rows.size()));
-
-        	// 3️⃣ Select random risk (LOW / MEDIUM / HIGH)
-        	WebElement riskDropdown = randomRow.findElement(By.tagName("select"));
-        	Select riskSelect = new Select(riskDropdown);
-
-        	String[] risks = {"LOW", "MEDIUM", "HIGH"};
-        	String randomRisk = risks[rand.nextInt(risks.length)];
-        	riskSelect.selectByVisibleText(randomRisk);
-        	WebElement remarkField = randomRow.findElement(
-        		    By.xpath(".//textarea | .//input[@type='text']")
+        	
+        	
+        	Map<String, String[]> checklistData = Map.of(
+        		    "11310049", new String[]{"LOW", ""},
+        		    "11310050", new String[]{"HIGH", "CIBIL verification not consistently done"},
+        		    "11310051", new String[]{"MEDIUM", "Deviation from RBI guidelines observed"},
+        		    "11310052", new String[]{"LOW", ""},
+        		    "11310053", new String[]{"HIGH", "ROI concessions without approval"}
         		);
 
-        		remarkField.clear();
-        		remarkField.sendKeys("Automated remark added for testing");
+        		WebDriverWait wait = new WebDriverWait(d, Duration.ofSeconds(10));
+        		JavascriptExecutor js = (JavascriptExecutor) d;
 
-        		// 5️⃣ Scroll into view (optional but safe)
-        		((JavascriptExecutor) d).executeScript(
-        		    "arguments[0].scrollIntoView(true);", randomRow
-        		);
+        		List<WebElement> rows = wait.until(
+        		        ExpectedConditions.presenceOfAllElementsLocatedBy(
+        		                By.xpath("//table[@id='checkListTable']//tr[td]")));
 
+        		for (WebElement row : rows) {
+        		    String checklistNo = row.findElement(By.xpath("./td[1]")).getText().trim();
+        		    if (!checklistData.containsKey(checklistNo)) continue;
+
+        		    String risk = checklistData.get(checklistNo)[0];
+        		    String remarks = checklistData.get(checklistNo)[1];
+
+        		    // Select dropdown
+        		    new Select(row.findElement(By.xpath(".//select[contains(@id,'irrSelect')]")))
+        		            .selectByVisibleText(risk);
+
+        		    if (risk.equalsIgnoreCase("LOW")) continue;  // Only MEDIUM/HIGH require remarks
+
+        		    List<WebElement> popup = d.findElements(By.id("indAuditObs"));
+        		    if (popup.isEmpty() || !popup.get(0).isDisplayed()) {
+        		        System.out.println("Popup not opened for checklist " + checklistNo);
+        		        continue;
+        		    }
+
+        		    WebElement remarksBox = wait.until(ExpectedConditions.elementToBeClickable(By.id("auditorcomnts")));
+        		    js.executeScript(
+        		        "arguments[0].value=''; arguments[0].value=arguments[1];" +
+        		        "arguments[0].dispatchEvent(new Event('input'));" +
+        		        "arguments[0].dispatchEvent(new Event('change'));", remarksBox, remarks
+        		    );
+
+        		    WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.id("auditObsSave")));
+        		    js.executeScript("arguments[0].scrollIntoView(true); arguments[0].click();", saveBtn);
+        		    wait.until(ExpectedConditions.not(ExpectedConditions.elementToBeClickable(saveBtn)));
+        		}
+
+        	d.findElement(By.xpath("//button[@id='saveprodbtn']")).click();
+        	
+        	
+        	
         	}
 }
