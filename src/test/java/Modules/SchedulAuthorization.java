@@ -16,14 +16,15 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
 import genericLibraries.UtilityMethod;
 import genericLibraries.login;
 
 public class SchedulAuthorization  {
 
-
-	public static void main(String[] args) throws InterruptedException, IOException {
+	@Test
+	public  void schedulauthorization() throws InterruptedException, IOException {
 
 		ChromeOptions op=new ChromeOptions();
 		op.setAcceptInsecureCerts(true);
@@ -78,7 +79,7 @@ public class SchedulAuthorization  {
         	List<WebElement> shrows = d.findElements(By.xpath("//tr[contains(@class,'Rows')]"));
         	System.out.println("Rows count: " + shrows.size());
         	for(WebElement shlstrows:shrows) {
-        		if(shlstrows.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
+        		if(shlstrows.getText().equalsIgnoreCase("0325-NAVALUR")) {
                 WebElement checkbox = shlstrows.findElement(By.xpath(".//input[@type='checkbox']"));
         			
         			Thread.sleep(500);

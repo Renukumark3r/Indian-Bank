@@ -15,14 +15,15 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
 import genericLibraries.UtilityMethod;
 import genericLibraries.login;
 
 public class Schedule {
 
-
-	public static void main(String[] args) throws InterruptedException, IOException {
+	@Test
+	public  void schedule() throws InterruptedException, IOException {
 
 		ChromeOptions op=new ChromeOptions();
 		op.setAcceptInsecureCerts(true);
@@ -69,14 +70,14 @@ public class Schedule {
         	d.findElement(By.xpath("//a[text()='Audit Schedule']")).click();Thread.sleep(3000);
         	d.findElement(By.xpath("//input[@id='auditDue']")).sendKeys("100");
         	d.findElement(By.xpath("//button[text()='Generate']")).click();
-        	d.findElement(By.xpath("//input[@id='searchid']")).sendKeys("0825");
+        	d.findElement(By.xpath("//input[@id='searchid']")).sendKeys("0325");
         	Thread.sleep(500); 
         	List<WebElement> search=d.findElements(By.xpath("//div[@class='search']//ul[@class='listitem']/li"));
         	
         	Thread.sleep(2000);
         	
         	for(WebElement sea:search) {
-        		if(sea.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
+        		if(sea.getText().equalsIgnoreCase("0325-NAVALUR")) {
         			sea.click();
         			break;
         		}
@@ -85,7 +86,7 @@ public class Schedule {
         	List<WebElement> rows = d.findElements(By.xpath("//tr[contains(@class,'Rows')]"));
         	System.out.println("Rows count: " + rows.size());
         	for(WebElement lstrows:rows) {
-        		if(lstrows.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
+        		if(lstrows.getText().equalsIgnoreCase("0325-NAVALUR")) {
         			WebElement checkbox = lstrows.findElement(By.xpath(".//input[@type='checkbox']"));
         			
         			Thread.sleep(500);
@@ -93,7 +94,7 @@ public class Schedule {
         		}
         	}
         	for(WebElement lstrows:rows) {
-                if(lstrows.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
+                if(lstrows.getText().equalsIgnoreCase("0325-NAVALUR")) {
     			WebElement checkbox = lstrows.findElement(By.xpath(".//a[@title='Team Leader']//i"));
     			Thread.sleep(500);
     			checkbox.click();
@@ -122,7 +123,7 @@ public class Schedule {
     		Thread.sleep(3000);
 
         	for(WebElement lstrows:rows) {
-                if(lstrows.getText().equalsIgnoreCase("0825-TRIVANDURM")) {
+                if(lstrows.getText().equalsIgnoreCase("0325-NAVALUR")) {
         	WebElement FromDate = lstrows.findElement(By.xpath(".//input[contains(@id,'fromDate')]"));
 			((JavascriptExecutor) d).executeScript("arguments[0].scrollIntoView(true);", FromDate);
 			FromDate.click();
@@ -137,7 +138,20 @@ public class Schedule {
         	
         	
         	
-        	
+    		By logoutBtn = By.xpath("//img[@title='Logout']");
+    		By modal = By.id("modallogininfo");
+
+    		WebDriverWait wait = new WebDriverWait(d, Duration.ofSeconds(20));
+
+    		// wait until modal disappears (if present)
+    		wait.until(ExpectedConditions.invisibilityOfElementLocated(modal));
+
+    		// re-find and click
+    		WebElement logout = wait.until(ExpectedConditions.elementToBeClickable(logoutBtn));
+    		((JavascriptExecutor) d).executeScript("arguments[0].click();", logout);
+    		Alert alert = d.switchTo().alert();
+        	System.out.println(alert.getText());
+        	alert.accept();
         	
         	
         	

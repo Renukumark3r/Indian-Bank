@@ -19,14 +19,15 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
 import genericLibraries.UtilityMethod;
 import genericLibraries.login;
 
 public class dummy {
 
-
-	public static void main(String[] args) throws InterruptedException, IOException {
+	@Test
+	public  void Dummy() throws InterruptedException, IOException {
 
 		ChromeOptions op=new ChromeOptions();
 		op.setAcceptInsecureCerts(true);
@@ -68,11 +69,11 @@ public class dummy {
         			break;
         		}
         	}
-        	d.findElement(By.xpath("//input[@id='branchsearch']")).sendKeys("ZONE001");
+        	d.findElement(By.xpath("//input[@id='branchsearch']")).sendKeys("0325");
         	Thread.sleep(500); 
         	List<WebElement> lsbranch=d.findElements(By.xpath("//tbody[@class='sticky_tbody']//a"));
         	for(WebElement lsbranchs:lsbranch) {
-        		if(lsbranchs.getText().equalsIgnoreCase("ZONE001-VELACHERY")) {
+        		if(lsbranchs.getText().equalsIgnoreCase("0325-NAVALUR")) {
         			lsbranchs.click();
         			break;
         		}
@@ -136,6 +137,21 @@ public class dummy {
         	d.findElement(By.xpath("//button[@id='saveprodbtn']")).click();
         	
         	
-        	
+    		System.out.println("observation save sucessfully " );
+    		By logoutBtn = By.xpath("//img[@title='Logout']");
+    		By modal = By.id("modallogininfo");
+
+    		//WebDriverWait wait01 = new WebDriverWait(d, Duration.ofSeconds(20));
+
+    		// wait until modal disappears (if present)
+    		wait.until(ExpectedConditions.invisibilityOfElementLocated(modal));
+
+    		// re-find and click
+    		WebElement logout = wait.until(ExpectedConditions.elementToBeClickable(logoutBtn));
+    		((JavascriptExecutor) d).executeScript("arguments[0].click();", logout);
+    		Alert alert = d.switchTo().alert();
+        	System.out.println(alert.getText());
+        	alert.accept();
+
         	}
 }
