@@ -70,14 +70,14 @@ public class Schedule {
         	d.findElement(By.xpath("//a[text()='Audit Schedule']")).click();Thread.sleep(3000);
         	d.findElement(By.xpath("//input[@id='auditDue']")).sendKeys("100");
         	d.findElement(By.xpath("//button[text()='Generate']")).click();
-        	d.findElement(By.xpath("//input[@id='searchid']")).sendKeys("0325");
+        	d.findElement(By.xpath("//input[@id='searchid']")).sendKeys("101226");
         	Thread.sleep(500); 
         	List<WebElement> search=d.findElements(By.xpath("//div[@class='search']//ul[@class='listitem']/li"));
         	
         	Thread.sleep(2000);
         	
         	for(WebElement sea:search) {
-        		if(sea.getText().equalsIgnoreCase("0325-NAVALUR")) {
+        		if(sea.getText().equalsIgnoreCase("101226-ARANI")) {
         			sea.click();
         			break;
         		}
@@ -86,7 +86,7 @@ public class Schedule {
         	List<WebElement> rows = d.findElements(By.xpath("//tr[contains(@class,'Rows')]"));
         	System.out.println("Rows count: " + rows.size());
         	for(WebElement lstrows:rows) {
-        		if(lstrows.getText().equalsIgnoreCase("0325-NAVALUR")) {
+        		if(lstrows.getText().equalsIgnoreCase("101226-ARANI")) {
         			WebElement checkbox = lstrows.findElement(By.xpath(".//input[@type='checkbox']"));
         			
         			Thread.sleep(500);
@@ -94,7 +94,7 @@ public class Schedule {
         		}
         	}
         	for(WebElement lstrows:rows) {
-                if(lstrows.getText().equalsIgnoreCase("0325-NAVALUR")) {
+                if(lstrows.getText().equalsIgnoreCase("101226-ARANI")) {
     			WebElement checkbox = lstrows.findElement(By.xpath(".//a[@title='Team Leader']//i"));
     			Thread.sleep(500);
     			checkbox.click();
@@ -123,7 +123,7 @@ public class Schedule {
     		Thread.sleep(3000);
 
         	for(WebElement lstrows:rows) {
-                if(lstrows.getText().equalsIgnoreCase("0325-NAVALUR")) {
+                if(lstrows.getText().equalsIgnoreCase("101226-ARANI")) {
         	WebElement FromDate = lstrows.findElement(By.xpath(".//input[contains(@id,'fromDate')]"));
 			((JavascriptExecutor) d).executeScript("arguments[0].scrollIntoView(true);", FromDate);
 			FromDate.click();

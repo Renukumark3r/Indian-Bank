@@ -2,10 +2,7 @@ package Modules;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -24,10 +21,10 @@ import org.testng.annotations.Test;
 import genericLibraries.UtilityMethod;
 import genericLibraries.login;
 
-public class dummy {
+public class dummy  {
 
 	@Test
-	public  void Dummy() throws InterruptedException, IOException {
+	public  void schedulauthorization() throws InterruptedException, IOException {
 
 		ChromeOptions op=new ChromeOptions();
 		op.setAcceptInsecureCerts(true);
@@ -35,7 +32,7 @@ public class dummy {
 		login lg=new login(d);
 		d.get("https://192.9.200.27:2322/IB_12_4/login.htm");
 		d.manage().window().maximize();
-		lg.getUsername().sendKeys("1515");
+		lg.getUsername().sendKeys("COUSER26");
 		lg.getpassword().sendKeys("1234");
 		lg.loginbt().click();
 		Thread.sleep(3000);
@@ -69,89 +66,30 @@ public class dummy {
         			break;
         		}
         	}
-        	d.findElement(By.xpath("//input[@id='branchsearch']")).sendKeys("0325");
-        	Thread.sleep(500); 
-        	List<WebElement> lsbranch=d.findElements(By.xpath("//tbody[@class='sticky_tbody']//a"));
-        	for(WebElement lsbranchs:lsbranch) {
-        		if(lsbranchs.getText().equalsIgnoreCase("0325-NAVALUR")) {
-        			lsbranchs.click();
-        			break;
+        	
+        	
+        	d.findElement(By.xpath("//div[@class='cls_menu_level1_options' and contains(.,'Audit')]")).click();
+        	d.findElement(By.xpath("//a[text()='Audit Schedule Authorization']")).click();
+        	d.findElement(By.xpath("//select[@id='zoneCode']")).click();
+        	//d.findElement(By.xpath("//select[@id='zoneCode']/option[@value='0825']")).click();
+        	String val="101226";
+        	Select drop=new Select(d.findElement(By.xpath("//select[@id='zoneCode']")));
+        	drop.selectByValue(val);
+        	
+        	List<WebElement> shrows = d.findElements(By.xpath("//tr[contains(@class,'Rows')]"));
+        	System.out.println("Rows count: " + shrows.size());
+        	for(WebElement shlstrows:shrows) {
+        		if(shlstrows.getText().equalsIgnoreCase("101226-ARANI")) {
+                WebElement checkbox = shlstrows.findElement(By.xpath(".//input[@type='checkbox']"));
+        			
+        			Thread.sleep(500);
+        			checkbox.click();
         		}
         	}
-
-        	//d.findElement(By.xpath("//img[@title='Audit']")).click();
-        	//d.findElement(By.xpath("//a[text()='Audit Commencement']")).click();	Thread.sleep(5000);
-        	//d.findElement(By.xpath("//input[@id='btnsubmit']")).click();Thread.sleep(5000);
-        	d.findElement(By.xpath("//img[@title='Audit']")).click();
-        	d.findElement(By.xpath("//a[text()='Audit Observation']")).click();
-        	d.findElement(By.xpath("//input[@id='prodSelectAll']")).click();
-        	d.findElement(By.xpath("//button[@id='nextbtn']")).click();
+    		d.findElement(By.xpath("//button[@onclick='saveData();']")).click();
+    		System.out.println("Schedule authorization save sucessfully " );
+   
         	
-        	
-        	Map<String, String[]> checklistData = Map.of(
-        		    "11310049", new String[]{"LOW", ""},
-        		    "11310050", new String[]{"HIGH", "CIBIL verification not consistently done"},
-        		    "11310051", new String[]{"MEDIUM", "Deviation from RBI guidelines observed"},
-        		    "11310052", new String[]{"LOW", ""},
-        		    "11310053", new String[]{"HIGH", "ROI concessions without approval"}
-        		);
-
-        		WebDriverWait wait = new WebDriverWait(d, Duration.ofSeconds(10));
-        		JavascriptExecutor js = (JavascriptExecutor) d;
-
-        		List<WebElement> rows = wait.until(
-        		        ExpectedConditions.presenceOfAllElementsLocatedBy(
-        		                By.xpath("//table[@id='checkListTable']//tr[td]")));
-
-        		for (WebElement row : rows) {
-        		    String checklistNo = row.findElement(By.xpath("./td[1]")).getText().trim();
-        		    if (!checklistData.containsKey(checklistNo)) continue;
-
-        		    String risk = checklistData.get(checklistNo)[0];
-        		    String remarks = checklistData.get(checklistNo)[1];
-
-        		    // Select dropdown
-        		    new Select(row.findElement(By.xpath(".//select[contains(@id,'irrSelect')]")))
-        		            .selectByVisibleText(risk);
-
-        		    if (risk.equalsIgnoreCase("LOW")) continue;  // Only MEDIUM/HIGH require remarks
-
-        		    List<WebElement> popup = d.findElements(By.id("indAuditObs"));
-        		    if (popup.isEmpty() || !popup.get(0).isDisplayed()) {
-        		        System.out.println("Popup not opened for checklist " + checklistNo);
-        		        continue;
-        		    }
-
-        		    WebElement remarksBox = wait.until(ExpectedConditions.elementToBeClickable(By.id("auditorcomnts")));
-        		    js.executeScript(
-        		        "arguments[0].value=''; arguments[0].value=arguments[1];" +
-        		        "arguments[0].dispatchEvent(new Event('input'));" +
-        		        "arguments[0].dispatchEvent(new Event('change'));", remarksBox, remarks
-        		    );
-
-        		    WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.id("auditObsSave")));
-        		    js.executeScript("arguments[0].scrollIntoView(true); arguments[0].click();", saveBtn);
-        		    wait.until(ExpectedConditions.not(ExpectedConditions.elementToBeClickable(saveBtn)));
-        		}
-
-        	d.findElement(By.xpath("//button[@id='saveprodbtn']")).click();
-        	
-        	
-    		System.out.println("observation save sucessfully " );
-    		By logoutBtn = By.xpath("//img[@title='Logout']");
-    		By modal = By.id("modallogininfo");
-
-    		//WebDriverWait wait01 = new WebDriverWait(d, Duration.ofSeconds(20));
-
-    		// wait until modal disappears (if present)
-    		wait.until(ExpectedConditions.invisibilityOfElementLocated(modal));
-
-    		// re-find and click
-    		WebElement logout = wait.until(ExpectedConditions.elementToBeClickable(logoutBtn));
-    		((JavascriptExecutor) d).executeScript("arguments[0].click();", logout);
-    		Alert alert = d.switchTo().alert();
-        	System.out.println(alert.getText());
-        	alert.accept();
 
         	}
 }

@@ -19,14 +19,15 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
 import genericLibraries.UtilityMethod;
 import genericLibraries.login;
 
 public class observation {
 
-
-	public static void main(String[] args) throws InterruptedException, IOException {
+	@Test
+	public  void Observation() throws InterruptedException, IOException {
 
 		ChromeOptions op=new ChromeOptions();
 		op.setAcceptInsecureCerts(true);
@@ -68,11 +69,11 @@ public class observation {
         			break;
         		}
         	}
-        	d.findElement(By.xpath("//input[@id='branchsearch']")).sendKeys("ZONE001");
+        	d.findElement(By.xpath("//input[@id='branchsearch']")).sendKeys("101226");
         	Thread.sleep(500); 
         	List<WebElement> lsbranch=d.findElements(By.xpath("//tbody[@class='sticky_tbody']//a"));
         	for(WebElement lsbranchs:lsbranch) {
-        		if(lsbranchs.getText().equalsIgnoreCase("ZONE001-VELACHERY")) {
+        		if(lsbranchs.getText().equalsIgnoreCase("101226-ARANI")) {
         			lsbranchs.click();
         			break;
         		}
