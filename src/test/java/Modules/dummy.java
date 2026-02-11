@@ -2,7 +2,10 @@ package Modules;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -21,10 +24,10 @@ import org.testng.annotations.Test;
 import genericLibraries.UtilityMethod;
 import genericLibraries.login;
 
-public class dummy  {
+public class dummy {
 
-	@Test
-	public  void schedulauthorization() throws InterruptedException, IOException {
+	
+	public static void main(String[] args)  throws InterruptedException, IOException {
 
 		ChromeOptions op=new ChromeOptions();
 		op.setAcceptInsecureCerts(true);
@@ -32,7 +35,7 @@ public class dummy  {
 		login lg=new login(d);
 		d.get("https://192.9.200.27:2322/IB_12_4/login.htm");
 		d.manage().window().maximize();
-		lg.getUsername().sendKeys("COUSER26");
+		lg.getUsername().sendKeys("1515");
 		lg.getpassword().sendKeys("1234");
 		lg.loginbt().click();
 		Thread.sleep(3000);
@@ -66,30 +69,30 @@ public class dummy  {
         			break;
         		}
         	}
-        	
-        	
-        	d.findElement(By.xpath("//div[@class='cls_menu_level1_options' and contains(.,'Audit')]")).click();
-        	d.findElement(By.xpath("//a[text()='Audit Schedule Authorization']")).click();
-        	d.findElement(By.xpath("//select[@id='zoneCode']")).click();
-        	//d.findElement(By.xpath("//select[@id='zoneCode']/option[@value='0825']")).click();
-        	String val="101226";
-        	Select drop=new Select(d.findElement(By.xpath("//select[@id='zoneCode']")));
-        	drop.selectByValue(val);
-        	
-        	List<WebElement> shrows = d.findElements(By.xpath("//tr[contains(@class,'Rows')]"));
-        	System.out.println("Rows count: " + shrows.size());
-        	for(WebElement shlstrows:shrows) {
-        		if(shlstrows.getText().equalsIgnoreCase("101226-ARANI")) {
-                WebElement checkbox = shlstrows.findElement(By.xpath(".//input[@type='checkbox']"));
-        			
-        			Thread.sleep(500);
-        			checkbox.click();
+        	d.findElement(By.xpath("//input[@id='branchsearch']")).sendKeys("ZONE001");
+        	Thread.sleep(500); 
+        	List<WebElement> lsbranch=d.findElements(By.xpath("//tbody[@class='sticky_tbody']//a"));
+        	for(WebElement lsbranchs:lsbranch) {
+        		if(lsbranchs.getText().equalsIgnoreCase("ZONE001-VELACHERY")) {
+        			lsbranchs.click();
+        			break;
         		}
         	}
-    		d.findElement(By.xpath("//button[@onclick='saveData();']")).click();
-    		System.out.println("Schedule authorization save sucessfully " );
-   
         	
-
+        	// Audit Observation 
+        	
+        	/*d.findElement(By.xpath("//img[@title='Audit']")).click();
+        	d.findElement(By.xpath("//a[contains(@href,'transauditauthorization.htm')]")).click();
+        	d.findElement(By.xpath("//input[@id='selectallpts']")).click();
+        	d.findElement(By.xpath("//button[@id='saveaudpts']")).click();
+        	d.findElement(By.xpath("//img[@title='Audit']")).click();
+        	d.findElement(By.xpath("//a[@href='listwrapupaudit.htm?wrap=A&menuOptId=106&webServiceFlg=null']")).click();
+        	d.findElement(By.xpath("//button[@id='savebtn']")).click();*/
+        	d.findElement(By.xpath("//img[@title='Audit']")).click();
+        	
+        	
+        	//d.findElement(By.xpath("//a[text()='Audit Mandays Updation']")).click();
+        	
+        	
         	}
 }

@@ -78,10 +78,14 @@ public class observation {
         			break;
         		}
         	}
-
+        	// Audit Commencement
+        	
         	d.findElement(By.xpath("//img[@title='Audit']")).click();
         	d.findElement(By.xpath("//a[text()='Audit Commencement']")).click();	Thread.sleep(5000);
         	d.findElement(By.xpath("//input[@id='btnsubmit']")).click();Thread.sleep(5000);
+        	
+        	// Audit Observation
+        	
         	d.findElement(By.xpath("//img[@title='Audit']")).click();
         	d.findElement(By.xpath("//a[text()='Audit Observation']")).click();
         	d.findElement(By.xpath("//input[@id='prodSelectAll']")).click();

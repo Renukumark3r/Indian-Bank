@@ -5,7 +5,7 @@
     <classes>
       <class name="Modules.dummy">
         <methods>
-          <include name="Dummy"/>
+          <include name="Observation"/>
         </methods>
       </class> <!-- Modules.dummy -->
     </classes>
